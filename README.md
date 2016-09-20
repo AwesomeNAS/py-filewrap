@@ -6,9 +6,6 @@ To install and run example:
 
 Other targets:
 
-Install:
-    make env
-Run example:
-    make run_filebrowser
-Clean up:
-    make clean
+make env
+make run_filebrowser
+make clean
