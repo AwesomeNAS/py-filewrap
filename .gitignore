@@ -1,0 +1,8 @@
+### PyCharm ###
+.idea
+
+### Python Files ###
+.pyc
+
+### venv ###
+venv*
