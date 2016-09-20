@@ -1,3 +1,4 @@
+from enum import Enum
 from pathlib import PurePath
 
 
@@ -17,19 +18,19 @@ class FileWrapBase(object):
     def is_dir(self):
         if not self.type:
             self.type = self._get_type()
-        return self.type == 'dir'
+        return self.type == FileType.dir
 
     @property
     def is_file(self):
         if not self.type:
             self.type = self._get_type()
-        return self.type == 'file'
+        return self.type == FileType.file
 
     @property
     def is_link(self):
         if not self.type:
             self.type = self._get_type()
-        return self.type == 'symlink'
+        return self.type == FileType.symlink
 
     @property
     def parent(self):
@@ -40,3 +41,9 @@ class FileWrapBase(object):
 
     def _get_parent(self):
         raise NotImplementedError
+
+
+class FileType(Enum):
+    dir = 1
+    file = 2
+    symlink = 3

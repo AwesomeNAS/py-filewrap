@@ -1,6 +1,6 @@
 from pathlib import PurePath
 from freenas.dispatcher.client import Client
-from .filewrapbase import FileWrapBase
+from .filewrapbase import FileWrapBase, FileType
 
 
 class FileWrapRemote(FileWrapBase):
@@ -26,8 +26,8 @@ class FileWrapRemote(FileWrapBase):
     @type.setter
     def type(self, val):
         self._freenas_mappings = {
-            'DIRECTORY': 'dir',
-            'FILE': 'file',
+            'DIRECTORY': FileType.dir,
+            'FILE': FileType.file,
         }
         self.__type = self._freenas_mappings[val] if val else None
 

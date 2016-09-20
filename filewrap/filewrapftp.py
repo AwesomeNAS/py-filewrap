@@ -1,6 +1,6 @@
 from pathlib import PurePath
 from ftplib import FTP
-from .filewrapbase import FileWrapBase
+from .filewrapbase import FileWrapBase, FileType
 
 
 class FileWrapFtp(FileWrapBase):
@@ -15,14 +15,14 @@ class FileWrapFtp(FileWrapBase):
         with FTP(self.hostname, self.user, self.password) as ftp:
             ftp.cwd(self.path)
             for (name, t) in ftp.mlsd(facts=['type']):
-                if t['type'] in ('dir', 'file'):
+                if t['type'] in (FileType.dir, FileType.file):
                     yield FileWrapFtp(PurePath(self.uri).joinpath(name), type=t['type'], user=self.user, password=self.password)
                 else:
                     continue
 
     def _get_type(self):
         """ TODO """
-        return 'dir'
+        return FileType.dir
 
     def _get_parent(self):
         return FileWrapFtp(PurePath(self.uri).parent.as_posix(), user=self.user, password=self.password)

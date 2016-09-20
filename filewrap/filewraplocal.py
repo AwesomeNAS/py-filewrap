@@ -1,5 +1,5 @@
 from pathlib import PurePath, Path
-from .filewrapbase import FileWrapBase
+from .filewrapbase import FileWrapBase, FileType
 
 
 class FileWrapLocal(FileWrapBase):
@@ -14,7 +14,10 @@ class FileWrapLocal(FileWrapBase):
 
     def _get_type(self):
         p = Path(self.uri)
-        ret = 'dir' if p.is_dir() else 'file' if p.is_file() else  'symlink' if p.is_symlink() else None
+        ret = FileType.dir if p.is_dir() else \
+            FileType.file if p.is_file() else \
+            FileType.symlink if p.is_symlink() else \
+            None
         if ret:
             return ret
         else:

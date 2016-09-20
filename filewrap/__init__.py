@@ -1,3 +1,4 @@
+from .filewrapbase import FileType
 from .filewrapbase import FileWrapBase
 from .filewraplocal import FileWrapLocal
 from .filewrapremote import FileWrapRemote
