@@ -52,7 +52,6 @@ $(VENV)/$(FREENAS_CLIENT):
 
 $(WORKDIR)/$(FILEWRAP):
 	@mkdir $(WORKDIR)
-	@echo cp -r $(FILEWRAP) $(WORKDIR)/
 	@cp -r $(FILEWRAP) $(WORKDIR)/
 	@cp setup.py $(WORKDIR)
 	@cd $(WORKDIR) && $(VENV_PYTHON) setup.py install
