@@ -16,15 +16,15 @@ def main():
             print("f.uri={0}, INDEX:{1}".format(f.uri, i))
 
     while True:
-        i = input(">enter ftp/freenas user (leave empty for 'anonymous'/'root') :")
+        i = input(">enter ftp/freenas user (optional, leave empty for 'anonymous'/'root') :")
         _user = i
-        i = input(">enter ftp/freenas password:")
+        i = input(">enter ftp/freenas password (optional):")
         _password = i
         print("EXAMPLES:")
-        print("FTP    : 'ftp://localhost'")
-        print("FTP    : 'ftp://ftp.funet.fi/pub/CPAN'")
-        print("LOCAL  : 'file:///Users/piotrgl/designs/ixsystems/work/work_filebrowser/v01/src'")
-        print("REMOTE : 'remote://<freenas-host>/mnt/mypool/'")
+        print("FTP                            : 'ftp://localhost'")
+        print("FTP (accepts anonymous user)   : 'ftp://ftp.funet.fi/pub/CPAN'")
+        print("LOCAL                          : 'file:///Users/piotrgl/designs/ixsystems/work/work_filebrowser/v01/src'")
+        print("REMOTE                         : 'remote://<freenas-host>/mnt/mypool/'")
         i = input(">enter path:")
         currdir = FileProvider.open(i, user=_user, password=_password)
         files = [f for f in currdir.readdir()]
