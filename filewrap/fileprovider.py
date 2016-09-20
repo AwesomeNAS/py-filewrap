@@ -1,15 +1,18 @@
+from urllib.parse import urlparse
 from . import FileWrapLocal, FileWrapFtp, FileWrapRemote
 
 
 class FileProvider(object):
-    _local_prefix = "file://"
-    _remote_prefix = "remote://"
-    _ftp_prefix = "ftp://"
+    _scheme_local = "file"
+    _scheme_remote = "remote"
+    _scheme_ftp = "ftp"
 
     @staticmethod
     def open(path, user=None, password=None):
         def strip_path(p):
-            return p.split('://')[1]
+            o = urlparse(p)
+            return o.netloc + o.path
+
 
         kwargs = {}
         if user:
@@ -25,12 +28,12 @@ class FileProvider(object):
 
     @staticmethod
     def _is_path_local(path):
-        return path.startswith(FileProvider._local_prefix)
+        return urlparse(path).scheme == FileProvider._scheme_local
 
     @staticmethod
     def _is_path_remote(path):
-        return path.startswith(FileProvider._remote_prefix)
+        return urlparse(path).scheme == FileProvider._scheme_remote
 
     @staticmethod
     def _is_path_ftp(path):
-        return path.startswith(FileProvider._ftp_prefix)
+        return urlparse(path).scheme == FileProvider._scheme_ftp
