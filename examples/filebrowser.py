@@ -1,4 +1,5 @@
 import sys
+import getpass
 from filewrap import FileProvider
 
 
@@ -18,7 +19,7 @@ def main():
     while True:
         i = input(">enter ftp/freenas user (optional, leave empty for 'anonymous'/'root') :")
         _user = i
-        i = input(">enter ftp/freenas password (optional):")
+        i = getpass.getpass(">enter ftp/freenas password (optional):")
         _password = i
         print("EXAMPLES:")
         print("FTP                            : 'ftp://localhost'")
@@ -30,10 +31,16 @@ def main():
         files = [f for f in currdir.readdir()]
         print_files(files)
         while True:
-            i = input(">Select index ('k'=restart, 'enter'=navigate up):")
+            i = input(">Select index ('k'=restart, 'm'=mkdir, 'r'=rmdir, 'enter'=navigate up):")
             if i == 'k':
                 break
-            if is_number(i) :
+            elif i == 'm':
+                i = input(">Dirname:")
+                currdir.mkdir(i)
+            elif i == 'r':
+                currdir.rmdir()
+                currdir = currdir.parent
+            elif is_number(i) :
                 if int(i) < len(files) and files[int(i)].is_dir:
                     currdir = files[int(i)]
                 else:

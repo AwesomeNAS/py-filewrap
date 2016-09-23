@@ -25,6 +25,8 @@ class FileProvider(object):
             return FileWrapRemote(strip_path(path), **kwargs)
         elif FileProvider._is_path_ftp(path):
             return FileWrapFtp(strip_path(path), **kwargs)
+        else:
+            raise ValueError('Unrecognized uri scheme type')
 
     @staticmethod
     def _is_path_local(path):

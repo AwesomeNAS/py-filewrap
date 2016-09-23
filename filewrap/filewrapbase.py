@@ -14,6 +14,9 @@ class FileWrapBase(object):
     def readdir(self):
         raise NotImplementedError()
 
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        raise NotImplementedError()
+
     @property
     def is_dir(self):
         if not self.type:
