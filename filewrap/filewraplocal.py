@@ -1,3 +1,4 @@
+import errno
 from pathlib import PurePath, Path
 from .filewrapbase import FileWrapBase, FileType
 
@@ -22,7 +23,15 @@ class FileWrapLocal(FileWrapBase):
     def rmdir(self, name):
         if not self.is_dir:
             raise NotADirectoryError
-        Path(self.uri).rmdir()
+        try:
+            Path(self._get_child(name).uri).rmdir()
+        except OSError as e:
+            if e.errno == errno.ENOTEMPTY:
+                print("Error: Directory not empty")
+            else:
+                raise
+        except ValueError as e:
+            print("Error: {0}".format(e.args))
 
     def _map_type(self, val):
         return val
@@ -45,4 +54,4 @@ class FileWrapLocal(FileWrapBase):
         for d in self.readdir():
             if d.name == name:
                 return d
-        raise ValueError('Directory {0} does not have {1} object'.format(self.name, name))
+        raise ValueError('Directory/file does not exist: {0}'.format(name))

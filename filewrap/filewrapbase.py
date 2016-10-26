@@ -50,7 +50,11 @@ class FileWrapBase(object):
         return self._get_parent() if not self.path == '.' else self
 
     def get_child(self, name):
-        return self._get_child(name)
+        try:
+            return self._get_child(name)
+        except ValueError as e:
+            print("Error: {0}".format(e.args))
+            return self
 
     def _map_type(self, val):
         raise NotImplementedError
