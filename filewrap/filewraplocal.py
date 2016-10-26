@@ -52,14 +52,12 @@ class FileWrapLocal(FileWrapBase):
         if not self.is_dir:
             raise NotADirectoryError
         try:
-            Path(self._get_child(name).uri).rmdir()
+            Path(self.get_child(name).uri).rmdir()
         except OSError as e:
             if e.errno == errno.ENOTEMPTY:
                 print("Error: Directory not empty")
             else:
                 raise
-        except ValueError as e:
-            print("Error: {0}".format(e.args))
 
     def _map_type(self, val):
         return val

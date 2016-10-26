@@ -81,8 +81,7 @@ class FileWrapBase(object):
         for d in self.readdir():
             if d.name == name:
                 return d
-        print('Directory/file does not exist: {0}'.format(name))
-        return self
+        raise ValueError('Error: Directory/file does not exist: {0}'.format(name))
 
     def _map_type(self, val):
         raise NotImplementedError
