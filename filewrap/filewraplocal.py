@@ -49,9 +49,3 @@ class FileWrapLocal(FileWrapBase):
 
     def _get_parent(self):
         return FileWrapLocal(PurePath(self.uri).parent.as_posix())
-
-    def _get_child(self, name):
-        for d in self.readdir():
-            if d.name == name:
-                return d
-        raise ValueError('Directory/file does not exist: {0}'.format(name))

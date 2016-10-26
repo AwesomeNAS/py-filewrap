@@ -5,7 +5,7 @@ from pathlib import PurePath
 class FileWrapBase(object):
     def __init__(self, uri, type=None):
         def split_uri(uri):
-            return (PurePath(uri).parts[0], PurePath(*PurePath(uri).parts[1:]).as_posix())
+            return (PurePath(uri).parts[0], PurePath('/', *PurePath(uri).parts[1:]).as_posix())
 
         self.uri = uri
         self.__type = self._map_type(type) if type else None
@@ -50,11 +50,11 @@ class FileWrapBase(object):
         return self._get_parent() if not self.path == '.' else self
 
     def get_child(self, name):
-        try:
-            return self._get_child(name)
-        except ValueError as e:
-            print("Error: {0}".format(e.args))
-            return self
+        for d in self.readdir():
+            if d.name == name:
+                return d
+        print('Directory/file does not exist: {0}'.format(name))
+        return self
 
     def _map_type(self, val):
         raise NotImplementedError

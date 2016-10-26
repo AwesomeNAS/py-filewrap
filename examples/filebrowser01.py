@@ -24,7 +24,7 @@ def main():
         print("EXAMPLES:")
         print("FTP                            : 'ftp://localhost'")
         print("FTP (accepts anonymous user)   : 'ftp://ftp.funet.fi/pub/CPAN'")
-        print("LOCAL                          : 'file:///Users/piotrgl/designs/ixsystems/work/work_filebrowser/v01/src'")
+        print("LOCAL                          : 'file:///Users'")
         print("REMOTE                         : 'remote://<freenas-host>/mnt/mypool/'")
         i = input(">enter path:")
         currdir = FileProvider.open(i, user=_user, password=_password)

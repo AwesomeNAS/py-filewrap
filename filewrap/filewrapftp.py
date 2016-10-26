@@ -4,19 +4,20 @@ from .filewrapbase import FileWrapBase, FileType
 
 
 class FileWrapFtp(FileWrapBase):
-    def __init__(self, uri, type=None, user='anonymous', password=''):
+    def __init__(self, uri, type=None, username='anonymous', password=''):
         super(FileWrapFtp, self).__init__(uri, type)
-        self.user = user
+        self.username = username
         self.password = password
 
     def readdir(self):
         if not self.is_dir:
             raise NotADirectoryError
-        with FTP(self.hostname, self.user, self.password) as ftp:
+        with FTP(self.hostname, self.username, self.password) as ftp:
             ftp.cwd(self.path)
             for (name, t) in ftp.mlsd(facts=['type']):
                 if t['type'] in (FileType.dir.name, FileType.file.name):
-                    yield FileWrapFtp(PurePath(self.uri).joinpath(name), type=t['type'], user=self.user, password=self.password)
+                    yield FileWrapFtp(PurePath(self.uri).joinpath(name),
+                                      type=t['type'], username=self.username, password=self.password)
                 else:
                     continue
 
@@ -29,7 +30,7 @@ class FileWrapFtp(FileWrapBase):
 
     def _get_type(self):
         """ TODO """
-        return 'dir'
+        return self._map_type('dir')
 
     def _get_parent(self):
-        return FileWrapFtp(PurePath(self.uri).parent.as_posix(), user=self.user, password=self.password)
+        return FileWrapFtp(PurePath(self.uri).parent.as_posix(), username=self.username, password=self.password)
