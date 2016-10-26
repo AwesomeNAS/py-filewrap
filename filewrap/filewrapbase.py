@@ -93,8 +93,6 @@ class FileWrapBase(object):
     def _get_parent(self):
         raise NotImplementedError
 
-    def _get_child(self, name):
-        raise NotImplementedError
 
 class FileType(Enum):
     dir = 1
