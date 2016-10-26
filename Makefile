@@ -14,8 +14,11 @@ FREENAS_UTILS = py-freenas-utils
 FREENAS_CLIENT = dispatcher-client
 FILEWRAP = filewrap
 
-.PHONY: example
-example: env run_filebrowser
+.PHONY: example01
+example: env run_filebrowser01
+
+.PHONY: example02
+example: env run_filebrowser02
 
 .PHONY: env 
 env: $(VENV) install_utils install_dispatcher_client install_filewrap
@@ -33,10 +36,15 @@ install_dispatcher_client: $(VENV)/$(FREENAS_CLIENT)
 .PHONY: install_filewrap
 install_filewrap: $(WORKDIR)/$(FILEWRAP)
 
-.PHONY: run_filebrowser
-run_filebrowser:
+.PHONY: run_filebrowser01
+run_filebrowser01:
 	@clear
-	@$(VENV_PYTHON) ./examples/filebrowser.py
+	@$(VENV_PYTHON) ./examples/filebrowser01.py
+
+.PHONY: run_filebrowser02
+run_filebrowser02:
+	@clear
+	@$(VENV_PYTHON) ./examples/filebrowser02.py
 
 $(VENV):
 	@virtualenv $(VENV) --python=python3
