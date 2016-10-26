@@ -20,17 +20,12 @@ class FileWrapFtp(FileWrapBase):
                 else:
                     continue
 
-    @property
-    def type(self):
-        return self.__type
-
-    @type.setter
-    def type(self, val):
+    def _map_type(self, val):
         self._ftp_mappings = {
             'dir': FileType.dir,
             'file': FileType.file,
         }
-        self.__type = self._ftp_mappings[val] if val else None
+        return self._ftp_mappings[val]
 
     def _get_type(self):
         """ TODO """

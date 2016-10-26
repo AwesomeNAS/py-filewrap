@@ -19,17 +19,12 @@ class FileWrapRemote(FileWrapBase):
             yield FileWrapRemote(
                 PurePath(self.uri).joinpath(e['name']), type=e['type'], user=self.user, password=self.password)
 
-    @property
-    def type(self):
-        return self.__type
-
-    @type.setter
-    def type(self, val):
+    def _map_type(self, val):
         self._freenas_mappings = {
             'DIRECTORY': FileType.dir,
             'FILE': FileType.file,
         }
-        self.__type = self._freenas_mappings[val] if val else None
+        return self._freenas_mappings[val]
 
     def _get_type(self):
         #self.client.connect('ws://'+self.hostname)

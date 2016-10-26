@@ -1,4 +1,3 @@
-import sys
 from pathlib import PurePath, Path
 from .filewrapbase import FileWrapBase, FileType
 
@@ -20,10 +19,13 @@ class FileWrapLocal(FileWrapBase):
             raise ValueError('Name not specified')
         Path(self.uri).joinpath(name).mkdir()
 
-    def rmdir(self):
+    def rmdir(self, name):
         if not self.is_dir:
             raise NotADirectoryError
         Path(self.uri).rmdir()
+
+    def _map_type(self, val):
+        return val
 
     def _get_type(self):
         p = Path(self.uri)
@@ -38,3 +40,9 @@ class FileWrapLocal(FileWrapBase):
 
     def _get_parent(self):
         return FileWrapLocal(PurePath(self.uri).parent.as_posix())
+
+    def _get_child(self, name):
+        for d in self.readdir():
+            if d.name == name:
+                return d
+        raise ValueError('Directory {0} does not have {1} object'.format(self.name, name))
